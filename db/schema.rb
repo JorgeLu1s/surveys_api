@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_05_26_192022) do
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "survey_id"
-    t.hstore "answers", default: [], array: true
+    t.hstore "answers"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["survey_id"], name: "index_assessments_on_survey_id"

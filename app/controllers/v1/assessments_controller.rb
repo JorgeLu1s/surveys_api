@@ -10,6 +10,16 @@ class V1::AssessmentsController < ApplicationController
     end
   end
 
+  def update
+    @assessment = Assessment.find_by(user_id: assessment_params[:user_id], survey_id: assessment_params[:survey_id])
+
+    if @assessment.update(assessment_params)
+      render json: @assessment
+    else
+      render json: @assessment.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_user
@@ -17,6 +27,10 @@ class V1::AssessmentsController < ApplicationController
   end
 
   def assessment_params
-    params.require(:assessment).permit(:user_id, survey_ids: [], answers: [])
+    params.require(:assessment).tap do |whitelisted|
+      whitelisted[:answers] = params[:assessment][:answers]
+    end
+
+    params.require(:assessment).permit(:user_id, :survey_id, survey_ids: [], answers: {})
   end
 end
