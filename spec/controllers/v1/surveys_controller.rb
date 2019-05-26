@@ -6,6 +6,7 @@ RSpec.describe V1::SurveysController, type: :controller do
   describe 'POST #create' do
     context 'returns http created' do
       before do
+        authenticate_user
         post :create, params: { survey: params }
       end
 
@@ -16,6 +17,7 @@ RSpec.describe V1::SurveysController, type: :controller do
   describe 'GET #index' do
     context 'returns all the surveys' do
       before do
+        authenticate_user
         get :index
       end
 

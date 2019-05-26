@@ -1,4 +1,5 @@
 class V1::SurveysController < ApplicationController
+  before_action :authenticate_user
   before_action :set_survey, only: [:show, :update, :destroy]
 
   def index

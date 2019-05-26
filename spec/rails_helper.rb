@@ -59,6 +59,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include Request::JsonHelper, type: :controller
+  config.include AuthenticationHelper, type: :controller
   config.include FactoryBot::Syntax::Methods
 end
 
