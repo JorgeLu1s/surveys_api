@@ -6,8 +6,6 @@ ruby '2.6.2'
 gem 'rails', '~> 5.2.3'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'knock', '~> 2.1', '>= 2.1.1'
 gem 'bootsnap', '>= 1.1.0', require: false

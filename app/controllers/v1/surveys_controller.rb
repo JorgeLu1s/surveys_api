@@ -8,14 +8,14 @@ class V1::SurveysController < ApplicationController
   end
 
   def show
-    render json: @survey
+    render json: @survey, include: :questions
   end
 
   def create
     @survey = Survey.new(survey_params)
 
     if @survey.save
-      render json: @survey, status: :created
+      render json: @survey, include: :questions, status: :created
     else
       render json: @survey.errors, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class V1::SurveysController < ApplicationController
 
   def update
     if @survey.update(survey_params)
-      render json: @survey
+      render json: @survey, include: :questions
     else
       render json: @survey.errors, status: :unprocessable_entity
     end
