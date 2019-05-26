@@ -60,7 +60,7 @@ RSpec.describe V1::SurveysController, type: :controller do
 
       before(:each) do
         authenticate_user
-        put :update, params: {id: @survey.id, survey: attr}
+        put :update, params: { id: @survey.id, survey: attr }
         @survey.reload
         @question.reload
       end

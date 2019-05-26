@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_26_043419) do
+ActiveRecord::Schema.define(version: 2019_05_26_192022) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "survey_id"
+    t.hstore "answers", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_assessments_on_survey_id"
+    t.index ["user_id"], name: "index_assessments_on_user_id"
+  end
 
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "body"
@@ -41,5 +52,7 @@ ActiveRecord::Schema.define(version: 2019_05_26_043419) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "assessments", "surveys"
+  add_foreign_key "assessments", "users"
   add_foreign_key "questions", "surveys"
 end
