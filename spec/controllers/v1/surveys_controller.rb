@@ -19,12 +19,12 @@ RSpec.describe V1::SurveysController, type: :controller do
   describe 'POST to #create' do
     context 'on success' do
       before do
-        authenticate_user
+        authenticate_admin
         post :create, params: { survey: params }
       end
 
       it { expect(response).to have_http_status(:created) }
-      it { expect(json.keys).to match_array([:id, :title, :description, :questions, :created_at, :updated_at]) }
+      it { expect(json.keys).to match_array([:id, :title, :description, :questions]) }
       it { expect(json[:title]).to eq(params[:title]) }
       it { expect(json[:description]).to eq(params[:description]) }
       it { expect(json[:questions][0][:body]).to eq(params[:questions_attributes][0][:body]) }
@@ -38,7 +38,7 @@ RSpec.describe V1::SurveysController, type: :controller do
   describe 'GET to #index' do
     context 'on success' do
       before do
-        authenticate_user
+        authenticate_admin
         get :index
       end
 
@@ -59,7 +59,7 @@ RSpec.describe V1::SurveysController, type: :controller do
       end
 
       before(:each) do
-        authenticate_user
+        authenticate_admin
         put :update, params: { id: @survey.id, survey: attr }
         @survey.reload
         @question.reload

@@ -1,5 +1,6 @@
 class V1::SurveysController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_admin
   before_action :set_survey, only: [:show, :update, :destroy]
 
   def index
@@ -8,14 +9,14 @@ class V1::SurveysController < ApplicationController
   end
 
   def show
-    render json: @survey, include: :questions
+    render json: @survey
   end
 
   def create
     @survey = Survey.new(survey_params)
 
     if @survey.save
-      render json: @survey, include: :questions, status: :created
+      render json: @survey, status: :created
     else
       render json: @survey.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class V1::SurveysController < ApplicationController
 
   def update
     if @survey.update(survey_params)
-      render json: @survey, include: :questions
+      render json: @survey
     else
       render json: @survey.errors, status: :unprocessable_entity
     end

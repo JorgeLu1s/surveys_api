@@ -13,7 +13,7 @@ RSpec.describe V1::AssessmentsController, type: :controller do
       end
 
       before(:each) do
-        authenticate_user
+        authenticate_admin
         post :create, params: { assessment: params }
         @user.reload
       end

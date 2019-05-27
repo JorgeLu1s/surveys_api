@@ -1,12 +1,13 @@
 class V1::AssessmentsController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_admin, only: [:create]
   before_action :set_user
 
   def create
     if @user.survey_ids = assessment_params[:survey_ids]
-      render json: @user, include: :surveys, status: :created
+      render json: @user, status: :created
     else
-      render json: @user, include: :surveys, status: 500
+      render json: @user, status: 500
     end
   end
 
